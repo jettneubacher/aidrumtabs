@@ -6,6 +6,9 @@ from flask import Flask, request, jsonify, send_file, abort, after_this_request
 from flask_cors import CORS
 import torch
 
+app = Flask(__name__)
+CORS(app)
+
 # Set project root and ensure it's in sys.path
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(project_root)
@@ -22,8 +25,7 @@ MODEL_FOLDER = os.path.join(project_root, "models")
 # Ensure uploads directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-app = Flask(__name__)
-CORS(app)
+
 
 # Device setup
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
