@@ -7,6 +7,7 @@ from flask_cors import CORS
 import torch
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 125 * 1024 * 1024
 CORS(app)
 
 # Set project root and ensure it's in sys.path
