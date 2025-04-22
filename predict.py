@@ -39,7 +39,7 @@ def predict_audio(model_name, model, audio_file, device, threshold=0.4):
 
     log_mem_and_time("After preprocessing", start_time)
 
-    features = torch.tensor(features, dtype=torch.float16).to(device) # 16 instead of 32
+    features = torch.tensor(features, dtype=torch.float16).to(device)
 
     log_mem_and_time("After moving features to device", start_time)
 

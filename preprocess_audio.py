@@ -30,7 +30,7 @@ def preprocess_audio_file(file_path, time_steps=10, timeframe_length=0.116):
 
     #Extract features
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=hop_length)
-    spec = librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=hop_length, n_fft=512)), ref=np.max)
+    spec = librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=hop_length)), ref=np.max)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
 
     #Determine length of song in respect to timeframes
