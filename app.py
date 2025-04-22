@@ -8,7 +8,7 @@ import torch
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 125 * 1024 * 1024
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Set project root and ensure it's in sys.path
 project_root = os.path.dirname(os.path.abspath(__file__))
