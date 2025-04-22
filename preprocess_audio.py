@@ -23,14 +23,14 @@ def standardize(X):
 
 def preprocess_audio_file(file_path, time_steps=10, timeframe_length=0.116):
     #22050 sample rate for speed. Model was trained on this sample rate
-    y, sr = librosa.load(file_path, sr=22050)
+    y, sr = librosa.load(file_path, sr=22050, mono=True, dtype=np.float32)
 
 
     hop_length = 256
 
     #Extract features
     mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=hop_length)
-    spec = librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=hop_length)), ref=np.max)
+    spec = librosa.amplitude_to_db(np.abs(librosa.stft(y, hop_length=hop_length, n_fft=512)), ref=np.max)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
 
     #Determine length of song in respect to timeframes
@@ -53,9 +53,11 @@ def preprocess_audio_file(file_path, time_steps=10, timeframe_length=0.116):
         #print(f"Feature vector shape: {feature_vector.shape}")  # Should be (10, 1039)
         X.append(feature_vector)
 
-    X = np.array(X)
+    X = np.array(X, dtype=np.float32)
 
     X = standardize(X)
+
+    X = X.astype(np.float16)
 
     return X
 
